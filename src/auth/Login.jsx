@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import bgimage from "../assets/bg-image.png";
 import wifi from "../assets/wifi_logo.jpg";
 
 const Login = () => {
+  const [formdata, setFormdata] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, seterror] = useState("");
+
+  const handlechange = (e) => {
+    setFormdata({ ...formdata, [name]: value });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!formdata.email || !formdata.password) {
+      seterror("All fields are required");
+      return;
+    }
+
+    console.log(formdata);
+    seterror("");
+  };
+
   return (
     <div
       className="min-h-screen flex items-center justify-center px-4 bg-[#050814]"
@@ -25,7 +46,7 @@ const Login = () => {
 
             <h1 className="mt-4 text-5xl font-bold text-white leading-tight">
               LORAWAN <br />
-              SENSOR
+              SMART SENSOR
             </h1>
 
             <p className="mt-5 text-gray-400 text-sm leading-relaxed max-w-sm">
@@ -53,24 +74,34 @@ const Login = () => {
             {/* EMAIL */}
             <div className="mb-4">
               <label className="text-xs text-cyan-400 tracking-widest">
-                OPERATOR ID
+                EMAIL
               </label>
               <input
                 type="email"
-                placeholder="node.admin@lorawan.io"
+                placeholder="Enter your email"
                 className="w-full mt-2 px-4 py-3 rounded-xl bg-[#0b1224] border border-cyan-900/40 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                name="name"
+                value={formdata.email}
+                onChange={handlechange}
+                required
               />
+              <span className="text-cyan-200">{error}</span>
             </div>
             {/* PASSWORD */}
             <div className="mb-4">
               <label className="text-xs text-cyan-400 tracking-widest">
-                ACCESS KEY
+                PASSWORD
               </label>
               <input
                 type="password"
+                name="password"
+                onChange={handlechange}
                 placeholder="••••••••••"
                 className="w-full mt-2 px-4 py-3 rounded-xl bg-[#0b1224] border border-cyan-900/40 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                required
+                value={formdata.password}
               />
+              <span className="text-cyan-200">{error}</span>
             </div>
             {/* FORGOT PASSWORD */}
             <div className="flex justify-end mb-6">
@@ -79,8 +110,11 @@ const Login = () => {
               </button>
             </div>
             {/* LOGIN BUTTON */}
-            <button className="w-full py-3 rounded-xl font-semibold text-black bg-linear-to-r from-cyan-400 to-blue-400 hover:from-cyan-300 hover:to-blue-300 transition shadow-lg shadow-cyan-500/20 cursor-pointer">
-              INITIALIZE ACCESS →
+            <button
+              className="w-full py-3 rounded-xl font-semibold text-black bg-linear-to-r from-cyan-400 to-blue-400 hover:from-cyan-300 hover:to-blue-300 transition shadow-lg shadow-cyan-500/20 cursor-pointer"
+              onSubmit={handleSubmit}
+            >
+              LOGIN →
             </button>
           </div>
         </div>
