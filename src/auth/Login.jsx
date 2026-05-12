@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import bgimage from "../assets/bg-image.png";
 import wifi from "../assets/wifi_logo.jpg";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formdata, setFormdata] = useState({
     email: "",
     password: "",
   });
-  const [error, seterror] = useState("");
+  const [error, seterror] = useState({
+    email: "",
+    password: "",
+  });
 
   const handlechange = (e) => {
+    const { name, value } = e.target;
+
     setFormdata({ ...formdata, [name]: value });
   };
   const handleSubmit = (e) => {
@@ -58,7 +65,7 @@ const Login = () => {
 
         {/* RIGHT PANEL */}
         <div className="w-full md:w-1/2 p-10 bg-[#020617]/70 backdrop-blur-2xl">
-          <div className="max-w-sm mx-auto">
+          <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
             <div className="text-center mb-8">
               <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-cyan-500/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400">
                 <img src={wifi} alt="" />
@@ -80,12 +87,12 @@ const Login = () => {
                 type="email"
                 placeholder="Enter your email"
                 className="w-full mt-2 px-4 py-3 rounded-xl bg-[#0b1224] border border-cyan-900/40 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                name="name"
+                name="email"
                 value={formdata.email}
                 onChange={handlechange}
                 required
               />
-              <span className="text-cyan-200">{error}</span>
+              <span className="text-cyan-200">{error.email}</span>
             </div>
             {/* PASSWORD */}
             <div className="mb-4">
@@ -101,21 +108,36 @@ const Login = () => {
                 required
                 value={formdata.password}
               />
-              <span className="text-cyan-200">{error}</span>
+              <span className="text-cyan-200">{error.password}</span>
             </div>
             {/* FORGOT PASSWORD */}
             <div className="flex justify-end mb-6">
-              <button className="text-xs text-gray-400 hover:text-cyan-400 transition cursopo cursor-pointer">
+              <button
+                className="text-xs text-gray-400 hover:text-cyan-400 transition cursopo cursor-pointer"
+                onClick={() => navigate("/forgotpassword")}
+              >
                 Forgot Password?
               </button>
             </div>
             {/* LOGIN BUTTON */}
             <button
               className="w-full py-3 rounded-xl font-semibold text-black bg-linear-to-r from-cyan-400 to-blue-400 hover:from-cyan-300 hover:to-blue-300 transition shadow-lg shadow-cyan-500/20 cursor-pointer"
-              onSubmit={handleSubmit}
+              type="submit"
             >
               LOGIN →
             </button>
+          </form>
+          <hr className="my-5 border-transparent" />
+          <div className="text-center text-sm text-gray-400">
+            <p>
+              Have any problems?{" "}
+              <span
+                className="text-sm text-cyan-300 tracking-widest cursor-pointer hover:text-cyan-400"
+                onClick={() => navigate("/contactSupport")}
+              >
+                contact support
+              </span>
+            </p>
           </div>
         </div>
       </div>
